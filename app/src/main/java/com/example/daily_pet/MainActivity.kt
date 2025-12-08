@@ -134,6 +134,10 @@ class MainActivity : AppCompatActivity() {
             }
             Toast.makeText(this,"Sucesso", Toast.LENGTH_SHORT).show();
 
+            nomeHabito.text = null;
+            nomePet.text = null;
+
+
             if (cursor == null || !cursor.moveToNext()){
                 Toast.makeText(this, "Algo deu errado", Toast.LENGTH_SHORT);
             }

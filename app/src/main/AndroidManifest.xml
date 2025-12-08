@@ -12,10 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Daily_pet">
         <activity
+            android:name=".ActivityColecao"
+            android:exported="false" />
+        <activity
             android:name=".ActivityDetalhe"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
