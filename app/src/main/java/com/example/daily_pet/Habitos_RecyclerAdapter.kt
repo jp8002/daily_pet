@@ -45,14 +45,15 @@ class Habitos_RecyclerAdapter(
             val nome = cursor.getString(cursor.getColumnIndexOrThrow("nome"))
             val dias = cursor.getString(cursor.getColumnIndexOrThrow("dias_streak"))
             var objetivo = (cursor.getString(cursor.getColumnIndexOrThrow("objetivo"))).toInt()
-            val  db = DatabaseHelper(context)
+            val pet_id = cursor.getString(cursor.getColumnIndexOrThrow("pet_id"))
+            val  db = DatabaseHelper.getInstance(context)
             var formater = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             val agora = LocalDateTime.now().format(formater);
 
 
             if (dias.toInt() >= objetivo){
                 objetivo = (objetivo.toInt() + 30)
-                db.updateOne(id,"objetivo", objetivo.toString())
+                db.updateHabito("habitos", id,"objetivo", objetivo.toString())
             }
 
 
@@ -64,17 +65,19 @@ class Habitos_RecyclerAdapter(
 
             holder.botaoReiniciar.setOnClickListener {
 
-                db.updateOne(id.toString(), "dias_streak", "0")
-                db.updateOne(id.toString(), "data_criacao", agora)
-                db.updateOne(id.toString(), "objetivo", "30")
-                swapCursor(db.all) // atualiza RecyclerView
+                db.updateHabito("habitos", id.toString(), "dias_streak", "0")
+                db.updateHabito("habitos", id.toString(), "data_criacao", agora)
+                db.updateHabito("habitos", id.toString(), "objetivo", "30")
+                swapCursor(db.getAllHabitos("habitos")) // atualiza RecyclerView
             }
+            val teste = db.getHabitoById("pets",pet_id)
 
+            println("testet" + teste?.getString(1))
             Glide.with(context)
                 .asGif()
                 .load(
                     when(objetivo){
-                                    30 -> R.drawable.stage1
+                                    30 -> context.resources.getIdentifier(teste?.getString(teste.getColumnIndexOrThrow("nome_pet")) + "1", "drawable", context.packageName)
                                     60 -> R.drawable.stage2
                                     90 -> R.drawable.stage3
                                     else -> R.drawable.stage3

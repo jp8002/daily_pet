@@ -54,14 +54,14 @@ class MainActivity : AppCompatActivity() {
 
             // Atualiza cursor
             cursor.close()
-            cursor = myDB.all
+            cursor = myDB.getAllHabitos("habitos")
 
 
             if (cursor != null && cursor.moveToNext()){
                 do {
                     var streak = DateUtils.calcularDiasDesdeCriacao(cursor.getString(2))
                     println(streak)
-                    myDB.updateOne(cursor.getString(0),"dias_streak",streak.toString())
+                    myDB.updateHabito("habitos", cursor.getString(0),"dias_streak",streak.toString())
                 } while (cursor.moveToNext())
             }
 
@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView = this.findViewById(R.id.myRecicleView)
 
 
-        cursor = myDB.all;
+        cursor = myDB.getAllHabitos("habitos");
 
         adapter = Habitos_RecyclerAdapter(this, cursor);
 
@@ -126,8 +126,14 @@ class MainActivity : AppCompatActivity() {
 
             var formater = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             val agora = LocalDateTime.now().format(formater);
-
-            var isInserted = myDB.insertData(nomeHabito.text.toString(), agora, "0", nomePet.text.toString(),30)
+            val values = mapOf(
+                "nome" to nomeHabito.text.toString(),
+                "data_criacao" to agora,
+                "dias_streak" to "0",
+                "nome_pet" to nomePet.text.toString(),
+                "objetivo" to 30
+            )
+            var isInserted = myDB.insertData("habitos", values)
 
             if (isInserted == false){
                 Toast.makeText(this,"Algo deu errado", Toast.LENGTH_SHORT).show();
@@ -168,10 +174,10 @@ class MainActivity : AppCompatActivity() {
                     val id = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
 
                     // Delete row from DB
-                    myDB.deleteOne(id.toString())
+                    myDB.deleteHabito("habitos", id.toString())
 
                     // Update RecyclerView with new cursor
-                    cursor = myDB.all
+                    cursor = myDB.getAllHabitos("habitos")
                     adapter.swapCursor(cursor)
 
                     Toast.makeText(applicationContext, "Deletado!", Toast.LENGTH_SHORT).show()
@@ -186,7 +192,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun AtualizarRecycle(){
         cursor.close()  // Close old cursor
-        cursor = myDB.all  // Get new cursor
+        cursor = myDB.getAllHabitos("habitos")  // Get new cursor
         adapter = Habitos_RecyclerAdapter(this, cursor)
         recyclerView.adapter = adapter
     }

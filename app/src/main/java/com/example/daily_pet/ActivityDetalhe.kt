@@ -1,6 +1,5 @@
 package com.example.daily_pet
 
-import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
@@ -34,7 +33,7 @@ class ActivityDetalhe : AppCompatActivity() {
         val text_view_nome_pet = findViewById<TextView>(R.id.textViewNomePet)
         val myDB = DatabaseHelper.getInstance(this)
         val id_habito = intent.getStringExtra("idHabito")
-        val cursor = myDB.getOne(id_habito)
+        val cursor = myDB.getHabitoById("habitos", id_habito)
         val detalhe_progress = findViewById<ProgressBar>(R.id.detalheProgress)
         val text_progress = findViewById<TextView>(R.id.textViewPercent)
         val text_view_descricao = findViewById<TextView>(R.id.textViewDescricao)
@@ -47,7 +46,7 @@ class ActivityDetalhe : AppCompatActivity() {
         val gif  = findViewById<ImageView>(R.id.gifDetalhado)
         val descricao_detalhe : String
 
-        myDB.getOne(id_habito)?.use { cursor ->
+        myDB.getHabitoById("habitos",id_habito)?.use { cursor ->
             if (cursor.moveToFirst()) {
                 nome_habito_value = cursor.getString(cursor.getColumnIndexOrThrow("nome"))
                 streak = cursor.getString(cursor.getColumnIndexOrThrow("dias_streak"))
@@ -81,9 +80,9 @@ class ActivityDetalhe : AppCompatActivity() {
 
         botao_reiniciar.setOnClickListener {
             val agora = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
-            myDB.updateOne(id_habito.toString(), "dias_streak", "0")
-            myDB.updateOne(id_habito.toString(), "data_criacao", agora)
-            myDB.updateOne(id_habito.toString(), "objetivo", "30")
+            myDB.updateHabito("habitos",id_habito.toString(), "dias_streak", "0")
+            myDB.updateHabito("habitos", id_habito.toString(), "data_criacao", agora)
+            myDB.updateHabito("habitos", id_habito.toString(), "objetivo", "30")
 
             detalhe_progress.progress = 0
             text_progress.text = "0/30"
@@ -97,7 +96,7 @@ class ActivityDetalhe : AppCompatActivity() {
 
         botao_excluir.setOnClickListener {
             // Delete row from DB
-            myDB.deleteOne(id_habito.toString())
+            myDB.deleteHabito("habitos", id_habito.toString())
             this.finish()
         }
 

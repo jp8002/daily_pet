@@ -31,7 +31,7 @@ public class Habitos_RecyclerViewAdapter extends RecyclerView.Adapter<Habitos_Re
     public void onBindViewHolder(@NonNull Habitos_RecyclerViewAdapter.MyViewHolder holder, int position) {
 
         if(cursor.moveToPosition(position)){
-            // Replace "nome" with the actual column name in your DB
+
             String nomeHabito = cursor.getString(cursor.getColumnIndexOrThrow("nome"));
             holder.nomeHabito.setText(nomeHabito);
         }
