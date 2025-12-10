@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -57,6 +58,7 @@ class ActivityColecao : AppCompatActivity() {
             myDB.updateHabito("habitos", id_habito.toString(), "nome_pet", campo_nome.text.toString())
 
             setResult(RESULT_OK)
+            Toast.makeText(this,"Nome trocado com sucesso", Toast.LENGTH_SHORT).show()
         }
     }
 }

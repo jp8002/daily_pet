@@ -122,7 +122,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/editTextNomePet"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/botao_editar" />
+                        app:srcCompat="@drawable/botao_salvar" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
