@@ -95,6 +95,9 @@ class MainActivity : AppCompatActivity() {
 
 
         myDB = DatabaseHelper.getInstance(this);
+
+        verificarEPopularBanco()
+
         botaoAdiconar = dialog.findViewById(R.id.btnAdicionar)
         botaoCancelar = dialog.findViewById(R.id.btnCancelar)
         botaoCriar = this.findViewById(R.id.btnCriar)
@@ -122,7 +125,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         botaoAdiconar.setOnClickListener {
-
+            // Verifica se o nome do hábito foi preenchido
+            if (nomeHabito.text.toString().trim().isEmpty()) {
+                Toast.makeText(this, "Digite um nome para o hábito", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             var formater = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             val agora = LocalDateTime.now().format(formater);
@@ -189,6 +196,31 @@ class MainActivity : AppCompatActivity() {
 
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
+    }
+
+    private fun verificarEPopularBanco() {
+        val db = myDB.readableDatabase
+
+        // Verifica se a tabela pets existe e tem dados
+        try {
+            val cursorPets = db.rawQuery("SELECT COUNT(*) FROM pets", null)
+            cursorPets.moveToFirst()
+            val countPets = cursorPets.getInt(0)
+            cursorPets.close()
+
+            if (countPets == 0) {
+
+                // Popula a tabela pets
+                db.execSQL("""
+        INSERT INTO pets (nome_pet, requisito) VALUES
+        ('notgodzilla', 0),
+        ('notbillcipher', 60)
+    """.trimIndent())
+            }
+        } catch (e: Exception) {
+            // Se a tabela não existir, recria tudo
+            myDB.onUpgrade(db, 0, 1)
+        }
     }
 
     private fun AtualizarRecycle(){

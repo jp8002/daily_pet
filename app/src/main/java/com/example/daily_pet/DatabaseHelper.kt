@@ -45,6 +45,16 @@ class DatabaseHelper private constructor(context: Context) :
                 requisito INTEGER
             )
         """.trimIndent())
+
+        popularDadosIniciais(db)
+    }
+
+    private fun popularDadosIniciais(db: SQLiteDatabase) {
+        db.execSQL("""
+        INSERT INTO pets (nome_pet, requisito) VALUES
+        ('notgodzilla', 0),
+        ('notbillcipher', 60)
+    """.trimIndent())
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
