@@ -70,17 +70,17 @@ class Habitos_RecyclerAdapter(
                 db.updateHabito("habitos", id.toString(), "objetivo", "30")
                 swapCursor(db.getAllHabitos("habitos")) // atualiza RecyclerView
             }
-            val teste = db.getHabitoById("pets",pet_id)
+            val pet = db.getHabitoById("pets",pet_id)
 
-            println("testet" + teste?.getString(1))
+
             Glide.with(context)
                 .asGif()
                 .load(
                     when(objetivo){
-                                    30 -> context.resources.getIdentifier(teste?.getString(teste.getColumnIndexOrThrow("nome_pet")) + "1", "drawable", context.packageName)
-                                    60 -> R.drawable.stage2
-                                    90 -> R.drawable.stage3
-                                    else -> R.drawable.stage3
+                                    30 -> context.resources.getIdentifier(pet?.getString(pet.getColumnIndexOrThrow("nome_pet")) + "stage1", "drawable", context.packageName)
+                                    60 -> context.resources.getIdentifier(pet?.getString(pet.getColumnIndexOrThrow("nome_pet")) + "stage2", "drawable", context.packageName)
+                                    90 -> context.resources.getIdentifier(pet?.getString(pet.getColumnIndexOrThrow("nome_pet")) + "stage3", "drawable", context.packageName)
+                                    else -> context.resources.getIdentifier(pet?.getString(pet.getColumnIndexOrThrow("nome_pet")) + "stage3", "drawable", context.packageName)
                                 }
                 )
                 .into(holder.gif)

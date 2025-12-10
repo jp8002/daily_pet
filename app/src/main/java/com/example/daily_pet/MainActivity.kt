@@ -131,7 +131,8 @@ class MainActivity : AppCompatActivity() {
                 "data_criacao" to agora,
                 "dias_streak" to "0",
                 "nome_pet" to nomePet.text.toString(),
-                "objetivo" to 30
+                "objetivo" to 30,
+                "pet_id" to 1
             )
             var isInserted = myDB.insertData("habitos", values)
 
