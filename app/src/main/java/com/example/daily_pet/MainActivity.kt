@@ -122,7 +122,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         botaoAdiconar.setOnClickListener {
-
+            // Verifica se o nome do hábito foi preenchido
+            if (nomeHabito.text.toString().trim().isEmpty()) {
+                Toast.makeText(this, "Digite um nome para o hábito", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             var formater = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             val agora = LocalDateTime.now().format(formater);
