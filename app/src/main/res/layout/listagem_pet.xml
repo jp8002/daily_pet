@@ -42,9 +42,10 @@
             android:id="@+id/iconepetView"
             android:layout_width="89dp"
             android:layout_height="93dp"
-            app:srcCompat="@drawable/pet_silhouette"
-            tools:layout_editor_absoluteX="3dp"
-            tools:layout_editor_absoluteY="-4dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/notgodzilla_silhouette" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

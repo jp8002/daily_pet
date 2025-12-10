@@ -41,7 +41,8 @@ class DatabaseHelper private constructor(context: Context) :
         db.execSQL("""
             CREATE TABLE IF NOT EXISTS pets (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                nome_pet TEXT
+                nome_pet TEXT,
+                requisito INTEGER
             )
         """.trimIndent())
     }
