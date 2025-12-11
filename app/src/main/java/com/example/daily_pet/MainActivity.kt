@@ -60,7 +60,11 @@ class MainActivity : AppCompatActivity() {
             if (cursor != null && cursor.moveToNext()){
                 do {
                     var streak = DateUtils.calcularDiasDesdeCriacao(cursor.getString(2))
-                    println(streak)
+                    var maior_streak = cursor.getInt(cursor.getColumnIndexOrThrow("maior_streak"))
+
+                    if (streak.toInt() > maior_streak){
+                        myDB.updateOne("habitos", cursor.getString(0),"maior_streak",streak.toString())
+                    }
                     myDB.updateOne("habitos", cursor.getString(0),"dias_streak",streak.toString())
                 } while (cursor.moveToNext())
             }
@@ -137,6 +141,7 @@ class MainActivity : AppCompatActivity() {
                 "nome" to nomeHabito.text.toString(),
                 "data_criacao" to agora,
                 "dias_streak" to "0",
+                "maior_streak" to 0,
                 "nome_pet" to nomePet.text.toString(),
                 "objetivo" to 30,
                 "pet_id" to 1

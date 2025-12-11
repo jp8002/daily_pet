@@ -30,6 +30,7 @@ class ActivityDetalhe : AppCompatActivity() {
     lateinit var pet_id : String
     lateinit var id_habito : String
     lateinit var nome_do_pet : String
+    var maior_streak = 0
 
     lateinit var text_view_nome_habito : EditText
     lateinit var detalhe_progress : ProgressBar
@@ -104,6 +105,7 @@ class ActivityDetalhe : AppCompatActivity() {
             intent.putExtra("objetivo",objetivo)
             intent.putExtra("pet_id",pet_id)
             intent.putExtra("nome_pet", nome_pet_value)
+            intent.putExtra("maior_streak", maior_streak)
             this.startActivity(intent)
         }
 
@@ -129,6 +131,7 @@ class ActivityDetalhe : AppCompatActivity() {
                 nome_pet_value = cursor.getString(cursor.getColumnIndexOrThrow("nome_pet"))
                 objetivo = (cursor.getString(cursor.getColumnIndexOrThrow("objetivo"))).toInt()
                 pet_id = cursor.getString(cursor.getColumnIndexOrThrow("pet_id"))
+                maior_streak = cursor.getInt(cursor.getColumnIndexOrThrow("maior_streak"))
 
             } else {
                 Toast.makeText(this, "Hábito não encontrado", Toast.LENGTH_SHORT).show()

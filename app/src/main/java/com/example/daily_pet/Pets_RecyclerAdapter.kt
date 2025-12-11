@@ -16,7 +16,8 @@ class Pets_RecyclerAdapter (
     private var cursor: Cursor,
     private val objetivoAtual: Int = 30,
     private val habito_id : String,
-    private val db : DatabaseHelper
+    private val db : DatabaseHelper,
+    private val maior_streak : Int
 ) : RecyclerView.Adapter<Pets_RecyclerAdapter.MyViewHolder>(){
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -45,7 +46,7 @@ class Pets_RecyclerAdapter (
             val requisito = cursor.getString(cursor.getColumnIndexOrThrow("requisito")).toInt()
             holder.texto_conquista.text = "Atinja $requisito dias de progresso"
 
-            if (objetivoAtual <= requisito){
+            if (maior_streak < requisito){
                 holder.icone_pet.setImageResource(context.resources.getIdentifier(nome_pey + "_silhouette", "drawable", context.packageName))
             }
 
@@ -56,7 +57,7 @@ class Pets_RecyclerAdapter (
 
 
             holder.icone_pet.setOnClickListener {
-                if (objetivoAtual <= requisito){
+                if (maior_streak < requisito){
                     Toast.makeText(context,"Você ainda não atingiu os dias necessários", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }

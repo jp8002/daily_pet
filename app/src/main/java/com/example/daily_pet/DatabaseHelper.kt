@@ -31,6 +31,7 @@ class DatabaseHelper private constructor(context: Context) :
                 nome TEXT,
                 data_criacao TEXT,
                 dias_streak INTEGER,
+                maior_streak INTEGER,
                 nome_pet TEXT,
                 objetivo TEXT,
                 pet_id INTEGER,

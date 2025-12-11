@@ -36,6 +36,8 @@ class ActivityColecao : AppCompatActivity() {
         val objetivo = intent.getIntExtra("objetivo",30)
         val id_habito = intent.getStringExtra("idHabito")
         val nome_pet = intent.getStringExtra("nome_pet")
+
+        val maior_streak =intent.getIntExtra("maior_streak", 0)
         botao_editar_nome_pet = findViewById(R.id.btnEditarNomePet)
         campo_nome = findViewById(R.id.editTextNomePet)
         campo_nome.setText(nome_pet)
@@ -46,7 +48,7 @@ class ActivityColecao : AppCompatActivity() {
 
         cursor = myDB.getAll("pets");
 
-        adapter = Pets_RecyclerAdapter(this, cursor, objetivo, id_habito.toString(), myDB);
+        adapter = Pets_RecyclerAdapter(this, cursor, objetivo, id_habito.toString(), myDB,maior_streak);
 
         recyclerView.layoutManager = LinearLayoutManager(this);
         recyclerView.adapter = adapter;
